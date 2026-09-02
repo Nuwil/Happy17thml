@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#F6F0E4">
+<title>For My Favorite Person</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Song toggle -->
+<button id="songToggle" class="song-toggle" aria-label="Play our song" aria-pressed="false">
+  <span class="song-toggle__icon">♪</span>
+  <span class="song-toggle__label">Your Song</span>
+</button>
+<audio id="bgAudio" loop preload="none"></audio>
+
+<!-- CHAPTER 0 — HERO -->
+<section id="hero" class="hero">
+  <div class="hero__grain"></div>
+  <div class="hero__content">
+    <p class="eyebrow">a love letter to</p>
+    <h1 class="hero__name" id="heroName">Gullsha</h1>
+    <p class="hero__sub">from someone who never stops thinking about her</p>
+    <button id="enterBtn" class="btn-enter">
+      <span>Open It</span>
+    </button>
+  </div>
+  <div class="hero__scrollcue" aria-hidden="true">  
+    <span></span>
+  </div>
+</section>
+
+<main id="mainContent" class="main-content" hidden>
+
+  <!-- CHAPTER 1 — OUR MOMENTS -->
+  <section id="moments" class="section chapter">
+    <div class="chapter__head">
+      <p class="eyebrow">chapter one</p>
+      <h2 class="section-title">Your Cuteness         </h2>
+    </div>
+
+    <!-- <div class="tabs" id="momentTabs" role="tablist">
+      <button class="tab is-active" data-filter="all" role="tab" aria-selected="true">All</button>
+      <button class="tab" data-filter="start" role="tab" aria-selected="false">Where It All Started</button>
+      <button class="tab" data-filter="adventures" role="tab" aria-selected="false">Our Adventures</button>
+      <button class="tab" data-filter="little" role="tab" aria-selected="false">The Little Moments</button>
+    </div> -->
+
+    <div class="polaroid-grid" id="polaroidGrid"></div>
+  </section>
+
+  <!-- CHAPTER 2 — WHY YOU'RE MY FAVORITE -->
+  <section id="favorite" class="section chapter chapter--tint">
+    <div class="chapter__head">
+      <p class="eyebrow">chapter two</p>
+      <h2 class="section-title">Why You're My Favorite</h2>
+    </div>
+
+    <div class="reasons" id="reasonsList"></div>
+
+    <div class="letters">
+      <p class="letters__intro">Little envelopes, for whenever you need them.</p>
+      <div class="letters__grid" id="lettersGrid"></div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 3 — OUR SOUNDTRACK -->
+  <section id="soundtrack" class="section chapter">
+    <div class="chapter__head">
+      <p class="eyebrow">chapter three</p>
+      <h2 class="section-title">Our Soundtrack</h2>
+    </div>
+
+    <div class="song-card" id="songCard">
+      <div class="song-card__art" id="songArt" aria-hidden="true"></div>
+      <div class="song-card__info">
+        <p class="song-card__eyebrow">the song that sounds like you</p>
+        <h3 class="song-card__title" id="songTitle">Song Title</h3>
+        <p class="song-card__artist" id="songArtist">Artist Name</p>
+        <p class="song-card__note" id="songNote">Why this song is ours — fill this in.</p>
+        <button class="song-card__play" id="songCardPlay">
+          <span class="song-card__play-icon">▶</span> Play a preview
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAPTER 4 — SECRET REVEAL -->
+  <section id="reveal" class="section chapter chapter--tint reveal-section">
+    <div class="chapter__head">
+      <p class="eyebrow">one more thing</p>
+      <h2 class="section-title">Something's Waiting For You</h2>
+    </div>
+
+    <div class="reveal-box" id="revealBox">
+      <div class="reveal-box__locked" id="revealLocked">
+        <div class="reveal-box__seal"></div>
+        <p class="reveal-box__label">Unlocks in</p>
+        <div class="reveal-box__countdown" id="revealCountdown">
+          <div class="countdown__unit"><span id="cd-days">00</span><small>days</small></div>
+          <div class="countdown__unit"><span id="cd-hours">00</span><small>hrs</small></div>
+          <div class="countdown__unit"><span id="cd-mins">00</span><small>min</small></div>
+          <div class="countdown__unit"><span id="cd-secs">00</span><small>sec</small></div>
+        </div>
+      </div>
+      <div class="reveal-box__unlocked" id="revealUnlocked" hidden>
+        <p class="eyebrow">surprise</p>
+        <p class="reveal-box__message" id="revealMessage">The reveal text goes here.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>made with a ridiculous amount of love, for <span id="footerName">her</span>.</p>
+  </footer>
+
+</main>
+
+<!-- Envelope modal -->
+<div class="envelope-modal" id="envelopeModal" hidden>
+  <div class="envelope-modal__backdrop" id="envelopeBackdrop"></div>
+  <div class="envelope-modal__card" role="dialog" aria-modal="true" aria-labelledby="envelopeLabel">
+
+    <button class="envelope-modal__close" id="envelopeClose" aria-label="Close letter">×</button>
+    <img class="envelope-modal__image" id="envelopeImage" alt="" hidden>
+    <p class="envelope-modal__label" id="envelopeLabel">Open when...</p>
+    <p class="envelope-modal__text" id="envelopeText"></p>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
