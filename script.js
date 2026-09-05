@@ -6,7 +6,7 @@ const CONFIG = {
   yourName: "Noel",
 
   // Background/ambient song toggle (top-right button) — direct mp3/audio URL
-  bgSongUrl: "", // e.g. "https://example.com/song.mp3"
+  bgSongUrl: "../assets/bgmusic.mp3", // e.g. "https://example.com/song.mp3"
 
   // ---- Chapter 1: Our Moments ----
   // category: "start" | "adventures" | "little"
@@ -34,7 +34,7 @@ const CONFIG = {
   // ---- Chapter 2: Open-When Letters ----
   letters: [
     { image: "assets/envelope_image_1.png", label: "Open when you need a smile", text: "Hey MIAAAA, heheheh cheer up my love, i know you look cute when ure sad but you look more beautiful when ure happy." },
-    { image: "", label: "Open when you miss me", text: "I always miss you my love, i always hope that we can be together soon." },
+    { image: "assets/envelope_image_2.jpg", label: "Open when you miss me", text: "I always miss you my love, i always hope that we can be together soon." },
     { image: "", label: "Open on your actual birthday morning", text: "My love this is your day, and i want you to know how much you mean to me. I build this site js for you" },
   ],
 
@@ -49,7 +49,7 @@ const CONFIG = {
   // ---- Chapter 4: Secret Reveal ----
   // Set the exact unlock date/time (local time). Format: "YYYY-MM-DDTHH:MM:SS"
   revealDateTime: "2026-09-09T00:00:00",
-  revealMessage: "The surprise text, gift details, or reservation info goes here once it unlocks.",
+  revealMessage: "Hello my love, today is your best day!!! i hope that you will enjoy your day and i hope that you will like this site that i made for you. I love you so much my love, and i hope that we will be together soon. I know we are having a little hard time since we will be more busier together <3",
 };
 
 /* =====================================================================
