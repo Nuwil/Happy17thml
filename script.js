@@ -48,7 +48,7 @@ const CONFIG = {
 
   // ---- Chapter 4: Secret Reveal ----
   // Set the exact unlock date/time (local time). Format: "YYYY-MM-DDTHH:MM:SS"
-  revealDateTime: "2026-09-07T00:00:00",
+  revealDateTime: "2026-09-09T00:00:00",
   revealMessage: `Dear Gullsha,
 I wanted to write you a quick note to let you know how much you mean to me. Over the past 3 years we've been together, I've been reflecting on myself so i wont hurt you ever again, and it reminded me of how grateful i am to have you in my life.
 
