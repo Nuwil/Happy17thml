@@ -371,14 +371,7 @@ body {
 
 /* ---------- Reveal ---------- */
 .reveal-section { text-align: center; }
-.reveal-box {
-  max-width: 420px;
-  margin: 0 auto;
-  background: #fffdf8;
-  border-radius: 10px;
-  padding: 2.6rem 2rem;
-  box-shadow: var(--paper-shadow);
-}
+.reveal-box { max-width: 420px; margin: 0 auto; background: #fffdf8; border-radius: 10px; padding: 2.6rem 2rem; box-shadow: var(--paper-shadow); }
 .reveal-box__seal {
   width: 46px; height: 46px; margin: 0 auto 1.2rem;
   border-radius: 50%;
@@ -390,7 +383,145 @@ body {
 .countdown__unit { display: flex; flex-direction: column; align-items: center; }
 .countdown__unit span { font-family: var(--font-display); font-size: 2rem; color: var(--wine); }
 .countdown__unit small { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--wine-soft); }
-.reveal-box__message { font-family: var(--font-display); font-size: 1.3rem; font-style: italic; color: var(--wine); line-height: 1.5; }
+
+.reveal-cta {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-family: var(--font-display); font-size: 1.2rem; font-style: italic;
+  color: #fffdf8; background: linear-gradient(135deg, var(--rose), var(--wine));
+  border: none; padding: 0.9rem 1.8rem; border-radius: 999px; cursor: pointer;
+  box-shadow: 0 10px 22px -10px rgba(61,32,41,0.55);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: cta-pulse 2.2s ease-in-out infinite;
+}
+.reveal-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 26px -10px rgba(61,32,41,0.6); }
+.reveal-cta__icon { font-size: 1.3rem; }
+@keyframes cta-pulse {
+  0%, 100% { box-shadow: 0 10px 22px -10px rgba(61,32,41,0.55); }
+  50% { box-shadow: 0 10px 26px -6px rgba(61,32,41,0.4); }
+}
+@media (prefers-reduced-motion: reduce) { .reveal-cta { animation: none; } }
+
+/* ---------- Gift modal ---------- */
+.gift-modal { position: fixed; inset: 0; z-index: 70; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
+.gift-modal[hidden] { display: none; }
+.gift-modal__backdrop { position: absolute; inset: 0; background: rgba(61,32,41,0.6); backdrop-filter: blur(3px); }
+.gift-modal__card {
+  position: relative;
+  background: #fffdf8;
+  width: 100%; max-width: 780px;
+  border-radius: 14px;
+  box-shadow: 0 30px 70px -20px rgba(0,0,0,0.45);
+  animation: cardIn 0.35s ease;
+  display: grid;
+  grid-template-columns: minmax(200px, 260px) 1fr;
+  max-height: 88vh;
+  overflow: auto;
+}
+.gift-modal__close {
+  position: absolute; top: 0.8rem; right: 1rem; z-index: 2;
+  background: none; border: none; font-size: 1.6rem;
+  color: var(--wine-soft); cursor: pointer; line-height: 1;
+}
+.gift-modal__cake {
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(180deg, var(--cream-deep), #fffdf8);
+  padding: 2rem 1rem;
+}
+.gift-modal__content { padding: 2.4rem 2rem 2rem 1.4rem; }
+.gift-modal__content .reveal-letter { box-shadow: none; border: none; background: transparent; padding: 0.4rem 0.2rem; }
+
+@media (max-width: 640px) {
+  .gift-modal__card { grid-template-columns: 1fr; max-height: 92vh; }
+  .gift-modal__cake { padding: 1.6rem 1rem 0.6rem; }
+  .gift-modal__content { padding: 1.2rem 1.4rem 1.6rem; }
+}
+
+/* Simple CSS birthday cake */
+.cake { position: relative; width: 150px; }
+.cake__plate { width: 170px; height: 12px; margin-left: -10px; border-radius: 50%; background: var(--wine-soft); opacity: 0.25; }
+.cake__tier { position: relative; border-radius: 10px 10px 4px 4px; margin: 0 auto; box-shadow: inset 0 -6px 0 rgba(0,0,0,0.08); }
+.cake__tier--bottom { width: 150px; height: 66px; background: var(--rose); display: flex; align-items: flex-end; justify-content: space-evenly; padding-bottom: 10px; }
+.cake__tier--top { width: 104px; height: 54px; background: #f6d8c8; margin-top: -6px; display: flex; align-items: flex-start; justify-content: space-evenly; padding-top: 6px; }
+.cake__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
+.cake__drip { width: 14px; height: 14px; border-radius: 50%; background: #fffdf8; margin-top: -2px; }
+.cake__candle {
+  position: absolute; top: -34px; left: 50%; transform: translateX(-50%);
+  width: 6px; height: 30px; background: repeating-linear-gradient(180deg, var(--gold) 0 6px, #fffdf8 6px 8px);
+  border-radius: 2px;
+}
+.cake__flame {
+  position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  width: 10px; height: 16px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  background: radial-gradient(circle at 50% 70%, #fff2b8, var(--rose) 70%, var(--wine) 100%);
+  animation: flicker 1.4s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+@keyframes flicker {
+  0%, 100% { transform: translateX(-50%) scale(1) rotate(-1deg); }
+  50% { transform: translateX(-50%) scale(0.92, 1.08) rotate(2deg); }
+}
+@media (prefers-reduced-motion: reduce) { .cake__flame { animation: none; } }
+
+.reveal-box__unlocked { animation: letter-unfold 0.5s ease both; }
+@keyframes letter-unfold {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.reveal-letter {
+  position: relative;
+  text-align: left;
+  padding: 2rem 1.8rem 1.4rem;
+  background:
+    linear-gradient(var(--cream-deep) 1px, transparent 1px) 0 2.4em/100% 1.9em,
+    #fffefb;
+  border: 1px solid rgba(61,32,41,0.12);
+  border-radius: 6px;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset, 0 10px 24px -18px rgba(61,32,41,0.4);
+}
+.reveal-letter::before {
+  content: '❝';
+  position: absolute;
+  top: -0.3rem; left: 1rem;
+  font-family: var(--font-display);
+  font-size: 3.4rem;
+  color: var(--rose);
+  opacity: 0.35;
+  line-height: 1;
+}
+.reveal-letter__para {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-style: italic;
+  color: var(--wine);
+  line-height: 1.9;
+  margin: 0 0 1.1rem;
+}
+.reveal-letter__para:first-of-type::first-letter {
+  font-size: 2.6rem;
+  font-style: normal;
+  font-weight: 600;
+  color: var(--rose);
+  float: left;
+  line-height: 0.8;
+  margin: 0.1rem 0.35rem 0 0;
+}
+.reveal-letter__signoff { margin-top: 1.4rem; }
+.reveal-letter__valediction {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--wine-soft);
+  margin: 0;
+}
+.reveal-letter__signature {
+  font-family: 'Parisienne', cursive;
+  font-size: 2rem;
+  color: var(--wine);
+  margin: 0.2rem 0 0;
+}
+@media (max-width: 640px) {
+  .reveal-letter { padding: 1.6rem 1.2rem 1.1rem; }
+  .reveal-letter__para { font-size: 1.05rem; }
+}
 
 /* ---------- Footer ---------- */
 .footer {

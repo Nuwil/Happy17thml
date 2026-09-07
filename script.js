@@ -6,7 +6,7 @@ const CONFIG = {
   yourName: "Noel",
 
   // Background/ambient song toggle (top-right button) — direct mp3/audio URL
-  bgSongUrl: "../assets/bgmusic.mp3", // e.g. "https://example.com/song.mp3"
+  bgSongUrl: "assets/bgmusic.mp3", // e.g. "https://example.com/song.mp3"
 
   // ---- Chapter 1: Our Moments ----
   // category: "start" | "adventures" | "little"
@@ -35,7 +35,7 @@ const CONFIG = {
   letters: [
     { image: "assets/envelope_image_1.png", label: "Open when you need a smile", text: "Hey MIAAAA, heheheh cheer up my love, i know you look cute when ure sad but you look more beautiful when ure happy." },
     { image: "assets/envelope_image_2.jpg", label: "Open when you miss me", text: "I always miss you my love, i always hope that we can be together soon." },
-    { image: "", label: "Open on your actual birthday morning", text: "My love this is your day, and i want you to know how much you mean to me. I build this site js for you" },
+    { image: "assets/envelope_image_3.jpg", label: "Open when you want to see MILO", text: "Look at your cute cat, she sure do loves you and makes you smile." },
   ],
 
   // ---- Chapter 3: Our Soundtrack ----
@@ -48,8 +48,14 @@ const CONFIG = {
 
   // ---- Chapter 4: Secret Reveal ----
   // Set the exact unlock date/time (local time). Format: "YYYY-MM-DDTHH:MM:SS"
-  revealDateTime: "2026-09-09T00:00:00",
-  revealMessage: "Hello my love, today is your best day!!! i hope that you will enjoy your day and i hope that you will like this site that i made for you. I love you so much my love, and i hope that we will be together soon. I know we are having a little hard time since we will be more busier together <3",
+  revealDateTime: "2026-09-07T00:00:00",
+  revealMessage: `Dear Gullsha,
+I wanted to write you a quick note to let you know how much you mean to me. Over the past 3 years we've been together, I've been reflecting on myself so i wont hurt you ever again, and it reminded me of how grateful i am to have you in my life.
+
+I love the way you keep on holding on to me when i was giving up, i love how supportive you are, and i love it when we used to do pretty much everything. You bring me so much energy and warmth into me every time you woke up, you're like an energizer in my days, and b eing around you always makes things better. I'm really looking forward to your success and achievements that will come, i hope you nail all of them. Thank you for being who you are my love.  
+
+Always,
+Noel Gaddi`,
 };
 
 /* =====================================================================
@@ -64,6 +70,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const hero = document.getElementById("hero");
   const main = document.getElementById("mainContent");
   enterBtn.addEventListener("click", () => {
+    if (CONFIG.bgSongUrl) {
+      bgAudio.play().catch(() => {});
+    }
     main.hidden = false;
     hero.style.transition = "opacity 0.5s ease";
     hero.style.opacity = "0";
@@ -90,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
       songToggle.setAttribute("aria-pressed", "false");
       songToggle.querySelector(".song-toggle__label").textContent = "Our Song";
     } else {
+      if (!previewAudio.paused) { previewAudio.pause(); playBtn.innerHTML = `<span class="song-card__play-icon">▶</span> Play a preview`; }
       bgAudio.play().catch(() => {});
       songToggle.setAttribute("aria-pressed", "true");
       songToggle.querySelector(".song-toggle__label").textContent = "Pause";
@@ -215,25 +225,64 @@ document.addEventListener("DOMContentLoaded", () => {
   const previewAudio = new Audio();
   if (CONFIG.song.previewUrl) previewAudio.src = CONFIG.song.previewUrl;
   const playBtn = document.getElementById("songCardPlay");
+  let bgWasPlaying = false; // remembers if ambient song should resume after the preview
+
+  function setBgPlayingUI(isPlaying) {
+    songToggle.setAttribute("aria-pressed", String(isPlaying));
+    songToggle.querySelector(".song-toggle__label").textContent = isPlaying ? "Pause" : "Our Song";
+  }
+
   playBtn.addEventListener("click", () => {
     if (!CONFIG.song.previewUrl) return;
     if (previewAudio.paused) {
+      bgWasPlaying = !bgAudio.paused;
+      if (bgWasPlaying) { bgAudio.pause(); setBgPlayingUI(false); }
       previewAudio.play();
       playBtn.innerHTML = `<span class="song-card__play-icon">❚❚</span> Pause`;
     } else {
       previewAudio.pause();
       playBtn.innerHTML = `<span class="song-card__play-icon">▶</span> Play a preview`;
+      if (bgWasPlaying && CONFIG.bgSongUrl) { bgAudio.play().catch(() => {}); setBgPlayingUI(true); }
     }
   });
   previewAudio.addEventListener("ended", () => {
     playBtn.innerHTML = `<span class="song-card__play-icon">▶</span> Play a preview`;
+    if (bgWasPlaying && CONFIG.bgSongUrl) { bgAudio.play().catch(() => {}); setBgPlayingUI(true); }
   });
 
   // ---- Reveal countdown ----
   const target = new Date(CONFIG.revealDateTime).getTime();
   const lockedEl = document.getElementById("revealLocked");
   const unlockedEl = document.getElementById("revealUnlocked");
-  document.getElementById("revealMessage").textContent = CONFIG.revealMessage;
+  renderRevealLetter(CONFIG.revealMessage);
+
+  function renderRevealLetter(raw) {
+    const el = document.getElementById("revealMessage");
+    el.innerHTML = "";
+    const blocks = raw.trim().split(/\n\s*\n/); // split on blank lines -> paragraphs
+    const signOffIdx = blocks.findIndex((b) => /^(always|forever|yours|love),?/i.test(b.trim()));
+    const bodyBlocks = signOffIdx === -1 ? blocks : blocks.slice(0, signOffIdx);
+    const signBlocks = signOffIdx === -1 ? [] : blocks.slice(signOffIdx);
+
+    bodyBlocks.forEach((block) => {
+      const p = document.createElement("p");
+      p.className = "reveal-letter__para";
+      p.textContent = block.trim();
+      el.appendChild(p);
+    });
+    if (signBlocks.length) {
+      const lines = signBlocks.join("\n").split("\n").map((l) => l.trim()).filter(Boolean);
+      const wrap = document.createElement("div");
+      wrap.className = "reveal-letter__signoff";
+      lines.forEach((line, i) => {
+        const lineEl = document.createElement("p");
+        lineEl.className = i === lines.length - 1 ? "reveal-letter__signature" : "reveal-letter__valediction";
+        lineEl.textContent = line;
+        wrap.appendChild(lineEl);
+      });
+      el.appendChild(wrap);
+    }
+  }
 
   function tick() {
     const now = Date.now();
@@ -253,6 +302,35 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("cd-mins").textContent = String(mins).padStart(2, "0");
     document.getElementById("cd-secs").textContent = String(secs).padStart(2, "0");
   }
+  let timer;
   tick();
-  const timer = setInterval(tick, 1000);
+  timer = setInterval(tick, 1000);
+
+  // ---- Gift modal ----
+  const giftModal = document.getElementById("giftModal");
+  const giftCard = giftModal.querySelector(".gift-modal__card");
+  let giftLastFocused = null;
+  document.getElementById("revealOpenBtn").addEventListener("click", (e) => {
+    giftLastFocused = e.currentTarget;
+    giftModal.hidden = false;
+    document.body.style.overflow = "hidden";
+    document.getElementById("giftClose").focus();
+  });
+  function closeGift() {
+    giftModal.hidden = true;
+    document.body.style.overflow = "";
+    if (giftLastFocused) giftLastFocused.focus();
+  }
+  document.getElementById("giftClose").addEventListener("click", closeGift);
+  document.getElementById("giftBackdrop").addEventListener("click", closeGift);
+  document.addEventListener("keydown", (e) => {
+    if (giftModal.hidden) return;
+    if (e.key === "Escape") return closeGift();
+    if (e.key === "Tab") {
+      const f = giftCard.querySelectorAll("button, [href], [tabindex]:not([tabindex='-1'])");
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
 });

@@ -6,8 +6,9 @@
 <meta name="theme-color" content="#F6F0E4">
 <title>For My Favorite Person</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:ital,wght@0,300;0,400;0,500;1,400&family=Parisienne&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:,">
 </head>
 <body>
 
@@ -109,10 +110,37 @@
       </div>
       <div class="reveal-box__unlocked" id="revealUnlocked" hidden>
         <p class="eyebrow">surprise</p>
-        <p class="reveal-box__message" id="revealMessage">The reveal text goes here.</p>
+        <button class="reveal-cta" id="revealOpenBtn" type="button">
+          <span class="reveal-cta__icon">🎁</span> Open Your Gift
+        </button>
       </div>
     </div>
   </section>
+
+  <div class="gift-modal" id="giftModal" hidden>
+    <div class="gift-modal__backdrop" id="giftBackdrop"></div>
+    <div class="gift-modal__card" role="dialog" aria-modal="true" aria-labelledby="giftHeading">
+      <button class="gift-modal__close" id="giftClose" aria-label="Close">×</button>
+      <div class="gift-modal__cake" aria-hidden="true">
+        <div class="cake">
+          <div class="cake__candle">
+            <span class="cake__flame"></span>
+          </div>
+          <div class="cake__tier cake__tier--top">
+            <span class="cake__drip"></span><span class="cake__drip"></span><span class="cake__drip"></span>
+          </div>
+          <div class="cake__tier cake__tier--bottom">
+            <span class="cake__dot"></span><span class="cake__dot"></span><span class="cake__dot"></span><span class="cake__dot"></span>
+          </div>
+          <div class="cake__plate"></div>
+        </div>
+      </div>
+      <div class="gift-modal__content">
+        <p class="eyebrow" id="giftHeading">surprise</p>
+        <div class="reveal-letter" id="revealMessage" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
 
   <footer class="footer">
     <p>made with a ridiculous amount of love, for <span id="footerName">her</span>.</p>
